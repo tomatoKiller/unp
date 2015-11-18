@@ -108,3 +108,78 @@ void Getsockname(int sockfd, SA * sa, socklen_t *addrlen)
 		exit(1);
 	}
 }
+
+int Accept(int listenfd, SA * sa, socklen_t *addrlen)
+{
+	int n;
+again:
+	if( (n = accept(listenfd, sa, addrlen)) < 0)
+	{
+		if( errno == EINTR )
+			goto again;
+		else
+		{
+			printf("accept error\n");
+			exit(1);
+		}
+	}
+	return n;
+}
+
+void Listen(int listenfd, int backlog)
+{
+	if(listen(listenfd, backlog) < 0)
+		err_sys("listen error");
+}
+
+void Close(int fd)
+{
+	if( close(fd) < 0)
+		err_quit("close error");
+}
+
+void Setsockopt(int fd, int level, int optname, const void *optval, socklen_t optlen)
+{
+	if(setsockopt(fd, level, optname, optval, optlen) < 0)
+		err_sys("setsockopt error");
+}
+
+void Shutdown(int fd, int how)
+{
+	if( shutdown(fd, how) < 0)
+		err_sys("shutdown error");
+}
+
+Sigfunc	* Signal(int signo, Sigfunc * func)
+{
+	struct 	sigaction 	act, oact;
+
+	act.sa_handler = func;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+
+	if( signo == SIGALRM)
+	{
+#ifdef SA_INTERRUPT
+		act.sa_flags |= SA_INTERRUPT;
+#endif
+	}
+	else
+	{
+#ifdef SA_RESTART
+		act.sa_flags |= SA_RESTART;
+#endif
+	}
+
+	if (sigaction(signo, &act, &oact) < 0)
+		return SIG_ERR;
+
+	return oact.sa_handler;
+
+}
+
+void Writen(int fd, const void *ptr, size_t nbytes)
+{
+	if( writen(fd, ptr, nbytes) != nbytes )
+		err_sys("writen error");
+}

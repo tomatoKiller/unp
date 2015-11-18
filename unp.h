@@ -12,15 +12,48 @@
 #include <string.h>
 
 #include <stdlib.h>
+#include <signal.h>
+#include <errno.h>
+
+#include <sys/wait.h>
+#include <unistd.h>
 
 #define SA struct sockaddr 
 
+/* constant variable define */
+
 #define MAXLINE 	4096
 #define SERV_PORT	8787
+#define LISTENQ		10
 
+
+/* function macro define */
 
 #define bzero(addr, len) memset((addr), 0, (len) )
 
+#define max(a, b) ((a) < (b) ? (b) : (a) )
+
+/* function declaration */
+void err_ret(const char* fmt, ...);
+void err_sys(const char* fmt, ...);
+void err_dump(const char* fmt, ...);
+void err_msg(const char* fmt, ...);
+void err_quit(const char* fmt, ...);
+
+
+ssize_t writen(int fd, const void *ptr, size_t nbytes);
+void Writen(int fd, const void *ptr, size_t nbytes);
+
+typedef	void Sigfunc(int);
+
+void str_echo(int sockfd);
+
+Sigfunc * Signal(int signo, Sigfunc * func);
+void Shutdown(int fd, int how);
+void Setsockopt(int fd, int level, int optname, const void *optval, socklen_t optlen);
+void Close(int fd);
+void Listen(int listenfd, int backlog);
+int Accept(int listenfd, SA * sa, socklen_t *addrlen);
 
 void Getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
 void Inet_pton(int af, const char *src, void *dst);
