@@ -18,6 +18,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include <netdb.h>
+
 #define SA struct sockaddr 
 
 /* constant variable define */
