@@ -33,7 +33,10 @@ int Sendto(int sockfd, const void *buff, size_t nbytes, int flags, const SA *fro
 char * Fgets(char *buf, int len, FILE *fp);
 int Fputs(const char *str, FILE *fp);
 
+
+char * sock_ntop(const SA * sa, socklen_t addrlen);
 char *Sock_ntop(const SA * sa, socklen_t addrlen);
 
+void Getsockname(int sockfd, SA * sa, socklen_t *addrlen);
 
 #endif

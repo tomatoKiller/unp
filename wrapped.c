@@ -100,3 +100,11 @@ char *Sock_ntop(const SA * sa, socklen_t addrlen)
 	}
 	return ptr;
 }
+void Getsockname(int sockfd, SA * sa, socklen_t *addrlen)
+{
+	if( getsockname(sockfd, sa, addrlen) < 0)
+	{
+		perror("getsockname: ");
+		exit(1);
+	}
+}
