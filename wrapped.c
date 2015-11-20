@@ -183,3 +183,17 @@ void Writen(int fd, const void *ptr, size_t nbytes)
 	if( writen(fd, ptr, nbytes) != nbytes )
 		err_sys("writen error");
 }
+
+void Getpeername(int fd, SA * cliaddr, socklen_t *addrlen)
+{
+	if( getpeername(fd, cliaddr, addrlen) < 0)
+		err_sys("getpeername error");
+}
+
+void *Malloc(ssize_t nbytes)
+{
+	void *ptr;
+	if( (ptr = malloc(nbytes)) == NULL)
+		err_quit("malloc error");
+	return ptr;
+}

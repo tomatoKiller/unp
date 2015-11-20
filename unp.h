@@ -73,5 +73,12 @@ char * sock_ntop(const SA * sa, socklen_t addrlen);
 char *Sock_ntop(const SA * sa, socklen_t addrlen);
 
 void Getsockname(int sockfd, SA * sa, socklen_t *addrlen);
+void Getpeername(int fd, SA * cliaddr, socklen_t *addrlen);
+
+int tcp_connect(const char *host, const char *serv);
+void *Malloc(ssize_t nbytes);
+void daemon_inetd(const char*, int);
+
+#define Tcp_connect(host,serv) tcp_connect(host, serv)
 
 #endif
