@@ -197,3 +197,20 @@ void *Malloc(ssize_t nbytes)
 		err_quit("malloc error");
 	return ptr;
 }
+
+int Fcntl(int fd, int flag, int arg)
+{
+	int 	ret;
+	if( (ret = fcntl(fd, flag, arg)) < 0)
+		err_sys("fcntl error");
+	return ret;
+}
+int Select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
+		struct timeval * timeout)
+{
+	int n = select(nfds, readfds, writefds, exceptfds, timeout);
+	if( n < 0)
+		err_quit("select error");
+
+	return n;
+}

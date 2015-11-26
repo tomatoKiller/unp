@@ -17,8 +17,10 @@
 
 #include <sys/wait.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include <netdb.h>
+#include <sys/un.h>
 
 #define SA struct sockaddr 
 
@@ -27,7 +29,8 @@
 #define MAXLINE 	4096
 #define SERV_PORT	8787
 #define LISTENQ		10
-
+#define BUFFSIZE	1024
+#define UNIXSTR_PATH	/tmp/unix.str
 
 /* function macro define */
 
@@ -79,6 +82,15 @@ int tcp_connect(const char *host, const char *serv);
 void *Malloc(ssize_t nbytes);
 void daemon_inetd(const char*, int);
 
+ssize_t read_fd(int fd, void *ptr, size_t nbytes, int *recvfd);
+
+ssize_t write_fd(int fd, void *ptr, size_t nbytes, int sendfd);
+
+char *gf_time(void);
+int Fcntl(int fd, int flag, int arg);
+
+int Select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
+		struct timeval * timeout);
 #define Tcp_connect(host,serv) tcp_connect(host, serv)
 
 #endif
