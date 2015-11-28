@@ -37,6 +37,7 @@
 #define bzero(addr, len) memset((addr), 0, (len) )
 
 #define max(a, b) ((a) < (b) ? (b) : (a) )
+#define min(a, b) ((a) < (b) ? (a) : (b) )
 
 /* function declaration */
 void err_ret(const char* fmt, ...);
@@ -92,5 +93,15 @@ int Fcntl(int fd, int flag, int arg);
 int Select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
 		struct timeval * timeout);
 #define Tcp_connect(host,serv) tcp_connect(host, serv)
+void *Calloc(size_t n, size_t size);
 
+void Pthread_key_create(pthread_key_t *keyptr, void(*destructor)(void *value));
+void Pthread_once(pthread_once_t *onceptr, void (*init)(void));
+
+void Pthread_mutex_lock(pthread_mutex_t *mptr);
+void Pthread_mutex_unlock(pthread_mutex_t *mptr);
+void Pthread_cond_wait(pthread_cond_t *cptr, pthread_mutex_t *mptr);
+void Pthread_cond_signal(pthread_cond_t *cptr);
+
+void Pthread_join(pthread_t tid, void **retval);
 #endif

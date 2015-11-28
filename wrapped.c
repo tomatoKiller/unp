@@ -1,4 +1,5 @@
 #include "unp.h"
+#include <pthread.h>
 
 void Getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen)
 {
@@ -213,4 +214,78 @@ int Select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
 		err_quit("select error");
 
 	return n;
+
 }
+
+void Pthread_once(pthread_once_t *onceptr, void (*init)(void))
+{
+	int 	n;
+	n = pthread_once(onceptr, init);
+	if(n > 0)
+		err_sys("pthread_once error");
+}
+
+void Pthread_key_create(pthread_key_t *keyptr, void(*destructor)(void *value))
+{
+	int 	n;
+	n = pthread_key_create(keyptr, destructor);
+
+	if(n > 0)
+		err_sys("pthread_key_create error");
+}
+
+void *Calloc(size_t n, size_t size)
+{
+	void 	*ret;
+	ret = calloc(n, size);
+	if(ret == NULL)
+		err_quit("calloc error");
+	return ret;
+}
+
+
+void Pthread_mutex_lock(pthread_mutex_t *mptr)
+{
+	int 	n;
+	n = pthread_mutex_lock(mptr);
+
+	if(n > 0)
+		err_sys("pthread_mutex_lock error");
+}
+
+void Pthread_mutex_unlock(pthread_mutex_t *mptr)
+{
+	int 	n;
+	n = pthread_mutex_unlock(mptr);
+
+	if(n > 0)
+		err_sys("pthread_mutex_unlock error");
+}
+
+void Pthread_cond_wait(pthread_cond_t *cptr, pthread_mutex_t *mptr)
+{
+	int 	n;
+	n = pthread_cond_wait(cptr, mptr);
+
+	if(n > 0)
+		err_sys("pthread_cond_wait error");
+}
+
+void Pthread_cond_signal(pthread_cond_t *cptr)
+{
+	int 	n;
+	n = pthread_cond_signal(cptr);
+
+	if(n > 0)
+		err_sys("pthread_cond_signal error");
+}
+
+void Pthread_join(pthread_t tid, void **retval)
+{
+	int 	n;
+	n = pthread_join(tid, retval);
+
+	if(n > 0)
+		err_sys("pthread_join error");
+}
+

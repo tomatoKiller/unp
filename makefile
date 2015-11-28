@@ -21,5 +21,9 @@ mycat: unixdomain/mycat.c
 
 strclinonb: nonblock/strclinonb.c
 	gcc nonblock/strclinonb.c  wrapped.c lib/* -o build/strclinonb
+
+web: threads/web01.c threads/readline.c
+	gcc threads/* wrapped.c lib/* -lpthread -o build/web
+
 clean :
 	rm build/*
